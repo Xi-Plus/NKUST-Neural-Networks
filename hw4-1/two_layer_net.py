@@ -9,8 +9,10 @@ from collections import OrderedDict
 
 
 class MyNet:
+    layer_size = None
 
     def __init__(self, layer_size, weight_init_std=0.01):
+        self.layer_size = layer_size
         # 重みの初期化
         self.params = {}
         for i in range(1, len(layer_size)):
@@ -51,10 +53,9 @@ class MyNet:
         def loss_W(W): return self.loss(x, t)
 
         grads = {}
-        grads['W1'] = numerical_gradient(loss_W, self.params['W1'])
-        grads['b1'] = numerical_gradient(loss_W, self.params['b1'])
-        grads['W2'] = numerical_gradient(loss_W, self.params['W2'])
-        grads['b2'] = numerical_gradient(loss_W, self.params['b2'])
+        for i in range(1, len(self.layer_size)):
+            grads['W{}'.format(i)] = numerical_gradient(loss_W, self.params['W{}'.format(i)])
+            grads['b{}'.format(i)] = numerical_gradient(loss_W, self.params['b{}'.format(i)])
 
         return grads
 
@@ -73,7 +74,7 @@ class MyNet:
 
         # 設定
         grads = {}
-        grads['W1'], grads['b1'] = self.layers['Affine1'].dW, self.layers['Affine1'].db
-        grads['W2'], grads['b2'] = self.layers['Affine2'].dW, self.layers['Affine2'].db
+        for i in range(1, len(self.layer_size)):
+            grads['W{}'.format(i)], grads['b{}'.format(i)] = self.layers['Affine{}'.format(i)].dW, self.layers['Affine{}'.format(i)].db
 
         return grads
