@@ -8,8 +8,10 @@ from two_layer_net import MyNet
 
 # データの読み込み
 (x_train, t_train), (x_test, t_test) = cifar10.load_data()
-print('train:', len(x_train))
-print('test :', len(x_test))
+print(x_train.shape)
+print(t_train.shape)
+print(x_test.shape)
+print(t_test.shape)
 
 x_train = x_train.astype('float32') / 255.0
 x_test = x_test.astype('float32') / 255.0
@@ -85,3 +87,14 @@ for i in range(iters_num):
             for v2 in ans[i]:
                 print('{:5d}'.format(v2), end='')
             print()
+
+# グラフの描画
+markers = {'train': 'o', 'test': 's'}
+x = np.arange(len(train_acc_list))
+plt.plot(x, train_acc_list, label='train acc')
+plt.plot(x, test_acc_list, label='test acc', linestyle='--')
+plt.xlabel("epochs")
+plt.ylabel("accuracy")
+plt.ylim(0, 1.0)
+plt.legend(loc='lower right')
+plt.show()
