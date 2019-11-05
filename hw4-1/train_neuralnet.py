@@ -1,11 +1,10 @@
 # coding: utf-8
 import sys
 import os
-sys.path.append(os.pardir)
 
 import numpy as np
 from keras.datasets import cifar10
-from two_layer_net import TwoLayerNet
+from two_layer_net import MyNet
 
 # データの読み込み
 (x_train, t_train), (x_test, t_test) = cifar10.load_data()
@@ -19,7 +18,8 @@ from keras.utils import np_utils
 t_train = np_utils.to_categorical(t_train)
 t_test = np_utils.to_categorical(t_test)
 
-network = TwoLayerNet(input_size=3072, hidden_size=100, output_size=10)
+layer_size = [3072, 100, 10]
+network = MyNet(layer_size=layer_size)
 
 iters_num = 10000
 train_size = x_train.shape[0]
@@ -42,7 +42,10 @@ for i in range(iters_num):
     grad = network.gradient(x_batch, t_batch)
 
     # 更新
-    for key in ('W1', 'b1', 'W2', 'b2'):
+    for j in range(1, len(layer_size)):
+        key = 'W{}'.format(j)
+        network.params[key] -= learning_rate * grad[key]
+        key = 'b{}'.format(j)
         network.params[key] -= learning_rate * grad[key]
 
     loss = network.loss(x_batch, t_batch)

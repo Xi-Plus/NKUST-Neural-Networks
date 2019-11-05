@@ -8,21 +8,21 @@ from common.gradient import numerical_gradient
 from collections import OrderedDict
 
 
-class TwoLayerNet:
+class MyNet:
 
-    def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.01):
+    def __init__(self, layer_size, weight_init_std=0.01):
         # 重みの初期化
         self.params = {}
-        self.params['W1'] = weight_init_std * np.random.randn(input_size, hidden_size)
-        self.params['b1'] = np.zeros(hidden_size)
-        self.params['W2'] = weight_init_std * np.random.randn(hidden_size, output_size)
-        self.params['b2'] = np.zeros(output_size)
+        for i in range(1, len(layer_size)):
+            self.params['W{}'.format(i)] = weight_init_std * np.random.randn(layer_size[i - 1], layer_size[i])
+            self.params['b{}'.format(i)] = np.zeros(layer_size[i])
 
         # レイヤの生成
         self.layers = OrderedDict()
-        self.layers['Affine1'] = Affine(self.params['W1'], self.params['b1'])
-        self.layers['Relu1'] = Relu()
-        self.layers['Affine2'] = Affine(self.params['W2'], self.params['b2'])
+        for i in range(1, len(layer_size)):
+            self.layers['Affine{}'.format(i)] = Affine(self.params['W{}'.format(i)], self.params['b{}'.format(i)])
+            if i < len(layer_size) - 1:
+                self.layers['Relu{}'.format(i)] = Relu()
 
         self.lastLayer = SoftmaxWithLoss()
 
