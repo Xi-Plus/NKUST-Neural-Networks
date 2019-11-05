@@ -51,7 +51,7 @@ for i in range(iters_num):
     loss = network.loss(x_batch, t_batch)
     train_loss_list.append(loss)
 
-    if i % iter_per_epoch == 0:
+    if i % iter_per_epoch == iter_per_epoch - 1:
         train_acc, y1, t1 = network.accuracy(x_train, t_train)
         test_acc, y2, t2 = network.accuracy(x_test, t_test)
         train_acc_list.append(train_acc)
