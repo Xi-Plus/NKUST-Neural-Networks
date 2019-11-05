@@ -56,7 +56,7 @@ for i in range(iters_num):
         test_acc, y2, t2 = network.accuracy(x_test, t_test)
         train_acc_list.append(train_acc)
         test_acc_list.append(test_acc)
-        print('{} {:.4f} {:.4f}'.format(i, train_acc, test_acc))
+        print('{} {:.4f} {:.4f}'.format(i + 1, train_acc, test_acc))
 
         print('train:')
         ans = [[0 for i in range(10)] for j in range(10)]
