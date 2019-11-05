@@ -5,6 +5,7 @@ import os
 import numpy as np
 from keras.datasets import cifar10
 from two_layer_net import MyNet
+import matplotlib.pyplot as plt
 
 # データの読み込み
 (x_train, t_train), (x_test, t_test) = cifar10.load_data()
