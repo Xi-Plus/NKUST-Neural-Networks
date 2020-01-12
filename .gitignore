@@ -5,6 +5,8 @@ __pycache__/
 dataset/mnist.pkl
 *.docx
 *.pdf
+final-1/flowers/
+final-2/GloVe-1.2/
 hw6-1/BDRW/
 hw6-1/MNIST/
-final-1/flowers/
+hw6-3/flowers/
